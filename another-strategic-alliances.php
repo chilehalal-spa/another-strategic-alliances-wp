@@ -4,7 +4,6 @@
  * Description: Crea widgets Grids y Sliders mediante Custom Post Types.
  * Version: 1.4.1
  * Author: Zumito
- * Text Domain: another-sa
  */
 
 if (!defined('ABSPATH')) exit; 
