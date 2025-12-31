@@ -7,11 +7,11 @@
 }
 
 .another-grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 20px;
-    align-items: start;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
+    align-items: center;
     margin-top: 30px;
 }
 
@@ -21,6 +21,8 @@
     align-items: center;
     padding: 10px;
     transition: transform 0.3s ease;
+    width: 140px; 
+    flex: 0 0 auto; 
 }
 
 .another-grid-item:hover {
@@ -46,7 +48,6 @@
 /* Responsive */
 @media (max-width: 768px) {
     .another-grid-container {
-        grid-template-columns: repeat(3, 1fr); 
         gap: 15px;
     }
     .another-grid-item img {
