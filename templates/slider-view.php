@@ -1,12 +1,13 @@
 <?php
 /**
  * Plantilla: Vista Slider (Carrusel)
- * * Variables disponibles (heredadas del include):
+ * Variables disponibles:
  * @var string $display_title
  * @var string $color
  * @var array  $items
  * @var string $extra_class
  * @var bool   $show_names
+ * @var string $img_inline_style (NUEVO)
  */
 ?>
 <section class="another-slider-section">
@@ -27,10 +28,10 @@
                     <div class="swiper-slide another-slider-item <?php echo $extra_class; ?>">
                         <?php if ($link): ?>
                             <a href="<?php echo $link; ?>" target="_blank" rel="noopener">
-                                <img src="<?php echo $logo; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>">
+                                <img src="<?php echo $logo; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>" style="<?php echo $img_inline_style; ?>">
                             </a>
                         <?php else: ?>
-                            <img src="<?php echo $logo; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>">
+                            <img src="<?php echo $logo; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>" style="<?php echo $img_inline_style; ?>">
                         <?php endif; ?>
 
                         <?php if ($show_names && $name): ?>

@@ -36,12 +36,15 @@ class Another_SA_CPT {
         add_meta_box('another_sa_shortcode_box', 'Shortcode', [__CLASS__, 'render_shortcode_box'], 'another_widget', 'side', 'low');
     }
 
-    // --- MODIFICADO: Añadido Checkbox "Mostrar Nombres" ---
     public static function render_settings_box($post) {
         $layout = get_post_meta($post->ID, '_another_layout', true) ?: 'slider';
         $color  = get_post_meta($post->ID, '_another_title_color', true) ?: '#947e1e';
-        $show_names = get_post_meta($post->ID, '_another_show_names', true); // Recuperamos valor
+        $show_names = get_post_meta($post->ID, '_another_show_names', true); 
         
+        // --- NUEVO: Recuperar dimensiones ---
+        $img_width  = get_post_meta($post->ID, '_another_img_width', true);
+        $img_height = get_post_meta($post->ID, '_another_img_height', true);
+
         wp_nonce_field('another_sa_save_action', 'another_sa_nonce');
         ?>
         <p>
@@ -57,9 +60,20 @@ class Another_SA_CPT {
                 <input type="checkbox" name="another_show_names" value="1" <?php checked($show_names, '1'); ?>>
                 <strong>Mostrar Nombres de Items</strong>
             </label>
-            <br>
-            <small style="color:#666;">Si marcas esto, aparecerá el nombre debajo del logo.</small>
         </p>
+        <hr>
+        <p><strong>Tamaño de Logos (Opcional)</strong></p>
+        <div style="display:flex; gap:10px;">
+            <div>
+                <label style="font-size:11px;">Ancho Máx (px)</label>
+                <input type="number" name="another_img_width" value="<?php echo esc_attr($img_width); ?>" style="width:100%;" placeholder="Ej: 150">
+            </div>
+            <div>
+                <label style="font-size:11px;">Alto Máx (px)</label>
+                <input type="number" name="another_img_height" value="<?php echo esc_attr($img_height); ?>" style="width:100%;" placeholder="Ej: 90">
+            </div>
+        </div>
+        <p><small style="color:#666;">Deja vacío para usar los valores por defecto del CSS.</small></p>
         <hr>
         <p>
             <label><strong>Color del Título:</strong></label><br>
@@ -139,10 +153,16 @@ class Another_SA_CPT {
             update_post_meta($post_id, '_another_title_color', sanitize_hex_color($_POST['another_title_color']));
         }
 
-        // --- MODIFICADO: Guardar Checkbox ---
-        // Si el checkbox está marcado, viene en POST. Si no, no viene, así que guardamos '0' o vacío.
         $show_names = isset($_POST['another_show_names']) ? '1' : '';
         update_post_meta($post_id, '_another_show_names', $show_names);
+
+        // --- NUEVO: Guardar Dimensiones ---
+        if (isset($_POST['another_img_width'])) {
+            update_post_meta($post_id, '_another_img_width', sanitize_text_field($_POST['another_img_width']));
+        }
+        if (isset($_POST['another_img_height'])) {
+            update_post_meta($post_id, '_another_img_height', sanitize_text_field($_POST['another_img_height']));
+        }
 
         if (isset($_POST['another_items'])) {
             $json = wp_unslash($_POST['another_items']);
