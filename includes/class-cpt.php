@@ -38,7 +38,7 @@ class Another_SA_CPT {
 
     public static function render_settings_box($post) {
         $layout = get_post_meta($post->ID, '_another_layout', true) ?: 'slider';
-        $color  = get_post_meta($post->ID, '_another_title_color', true) ?: '#947e1e';
+        $color  = get_post_meta($post->ID, '_another_title_color', true) ?: '#1a428a';
         $show_names = get_post_meta($post->ID, '_another_show_names', true); 
         
         // --- NUEVO: Recuperar dimensiones ---
