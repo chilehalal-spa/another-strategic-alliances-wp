@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Another Strategic Alliances
+ * Plugin Name: Another Display Logos
  * Description: Crea widgets Grids y Sliders mediante Custom Post Types.
- * Version: 4.0.0
+ * Version: 1.4.1
  * Author: Zumito
  * Text Domain: another-sa
  */
