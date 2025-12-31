@@ -1,5 +1,5 @@
 /* ==================== */
-/*       GENERAL        */
+/* GENERAL        */
 /* ==================== */
 .another-section-title {
     text-align: center;
@@ -30,65 +30,64 @@
     line-height: 1.2;
 }
 
-/* Clases auxiliares cuando hay nombres activos */
-.partner-logo.has-names,
-.another-brand-item.has-names {
-    flex-direction: column; /* Apila imagen y texto */
+/* Auxiliares cuando hay nombres activos */
+.another-slider-item.has-names,
+.another-grid-item.has-names {
+    flex-direction: column;
     text-align: center;
 }
 
 /* ======================== */
-/* SECCIÓN ALIADOS (SLIDER) */
+/* SECCIÓN SLIDER (Antes Partners) */
 /* ======================== */
-.another-partners-section {
+.another-slider-section {
     padding: 50px 0;
     background-color: #ffffff;
 }
 
-.another-partners-slider .swiper-slide {
+.another-slider-container .swiper-slide {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Si mostramos nombres, el slide necesita altura flexible o mayor */
     height: auto; 
     min-height: 140px; 
     transition: transform 0.3s ease;
-    padding: 10px 0; /* Un poco de aire arriba/abajo */
+    padding: 10px 0;
 }
 
-.another-partners-slider img {
+.another-slider-container img {
     max-height: 90px; 
     max-width: 150px; 
     width: auto;
     height: auto;
     transition: all 0.3s ease;
     object-fit: contain;
-    display: block; /* Fix para alineación */
+    display: block;
     margin: 0 auto;
 }
 
-.another-partners-slider img:hover {
+.another-slider-container img:hover {
     transform: scale(1.05);
 }
 
 /* ===================== */
-/* SECCIÓN MARCAS (GRID) */
+/* SECCIÓN GRID (Antes Brands) */
 /* ===================== */
-.another-brands-section {
+.another-grid-section {
     padding: 40px 0;
     background-color: #ffffff;
 }
 
-.another-brands-grid {
+.another-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Un poco más ancho por el texto */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 20px;
-    align-items: start; /* Alineación superior para que los textos cuadren */
+    align-items: start;
     justify-content: center;
     margin-top: 30px;
 }
 
-.another-brand-item {
+.another-grid-item {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,11 +95,11 @@
     transition: transform 0.3s ease;
 }
 
-.another-brand-item:hover {
+.another-grid-item:hover {
     transform: scale(1.05); 
 }
 
-.another-brand-item img {
+.another-grid-item img {
     max-width: 100%;
     max-height: 50px; 
     width: auto;
@@ -112,11 +111,11 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .another-brands-grid {
+    .another-grid-container {
         grid-template-columns: repeat(3, 1fr); 
         gap: 15px;
     }
-    .another-brand-item img {
+    .another-grid-item img {
         max-height: 40px; 
     }
 }

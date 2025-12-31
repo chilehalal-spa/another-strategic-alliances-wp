@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const partnersSliderEl = document.querySelector('.another-partners-slider');
+    // Selector actualizado a la nueva nomenclatura
+    const sliderEl = document.querySelector('.another-slider-container');
     
-    if (partnersSliderEl) {
-        new Swiper('.another-partners-slider', {
+    if (sliderEl) {
+        new Swiper('.another-slider-container', {
             loop: true,
             slidesPerView: 2,
             spaceBetween: 30,
