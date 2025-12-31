@@ -1,0 +1,55 @@
+/* ===================== */
+/* SECCIÓN GRID          */
+/* ===================== */
+.another-grid-section {
+    padding: 40px 0;
+    background-color: #ffffff;
+}
+
+.another-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
+    align-items: start;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.another-grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.another-grid-item:hover {
+    transform: scale(1.05); 
+}
+
+.another-grid-item img {
+    max-width: 100%;
+    max-height: 50px; 
+    width: auto;
+    transition: all 0.3s ease;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Auxiliar para nombres activos en grid */
+.another-grid-item.has-names {
+    flex-direction: column;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .another-grid-container {
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 15px;
+    }
+    .another-grid-item img {
+        max-height: 40px; 
+    }
+}

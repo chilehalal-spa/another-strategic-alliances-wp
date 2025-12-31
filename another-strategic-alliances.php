@@ -18,9 +18,18 @@ require_once ANOTHER_SA_PATH . 'includes/shortcodes.php';
 
 // Frontend Assets
 function another_sa_enqueue_scripts() {
-    wp_enqueue_style('another-sa-style', ANOTHER_SA_URL . 'assets/css/style.css', [], '2.0.0');
+    // 1. Estilos Comunes (Base) - Se cargan siempre o se pueden condicionar también
+    wp_enqueue_style('another-sa-common', ANOTHER_SA_URL . 'assets/css/style.css', [], '2.1.0');
+
+    // 2. Swiper (Librería externa) - Se mantiene igual
     wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11.0.0');
     wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], '11.0.0', true);
+
+    // 3. Estilos Específicos (Solo REGISTRO, se encolan en el shortcode)
+    wp_register_style('another-sa-slider', ANOTHER_SA_URL . 'assets/css/slider.css', ['another-sa-common', 'swiper-css'], '2.1.0');
+    wp_register_style('another-sa-grid', ANOTHER_SA_URL . 'assets/css/grid.css', ['another-sa-common'], '2.1.0');
+
+    // 4. JS Frontend
     wp_enqueue_script('another-sa-frontend', ANOTHER_SA_URL . 'assets/js/frontend.js', ['swiper-js'], '2.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'another_sa_enqueue_scripts');

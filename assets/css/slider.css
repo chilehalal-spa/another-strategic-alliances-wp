@@ -1,0 +1,38 @@
+/* ======================== */
+/* SECCIÓN SLIDER           */
+/* ======================== */
+.another-slider-section {
+    padding: 50px 0;
+    background-color: #ffffff;
+}
+
+.another-slider-container .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto; 
+    min-height: 140px; 
+    transition: transform 0.3s ease;
+    padding: 10px 0;
+}
+
+.another-slider-container img {
+    max-height: 90px; 
+    max-width: 150px; 
+    width: auto;
+    height: auto;
+    transition: all 0.3s ease;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.another-slider-container img:hover {
+    transform: scale(1.05);
+}
+
+/* Auxiliar para nombres activos en slider */
+.another-slider-item.has-names {
+    flex-direction: column;
+    text-align: center;
+}

@@ -1,7 +1,7 @@
 <?php
 /**
- * Renderiza el shortcode del widget delegando a plantillas.
- * * @param array $atts Atributos del shortcode.
+ * Renderiza el shortcode del widget delegando a plantillas y cargando assets bajo demanda.
+ * @param array $atts Atributos del shortcode.
  * @return string HTML generado.
  */
 function another_sa_widget_render($atts) {
@@ -24,14 +24,18 @@ function another_sa_widget_render($atts) {
     if (empty($items) || !is_array($items)) return '';
 
     $display_title = !empty($atts['title']) ? $atts['title'] : get_the_title($post_id);
-    
-    // Clase auxiliar para estilos CSS
     $extra_class = $show_names ? 'has-names' : '';
+
+    // --- CARGA CONDICIONAL DE CSS ---
+    // Encolamos solo el estilo necesario para este layout
+    if ($layout === 'slider') {
+        wp_enqueue_style('another-sa-slider');
+    } else {
+        wp_enqueue_style('another-sa-grid');
+    }
 
     ob_start();
     
-    // Carga dinámica de la plantilla basada en el layout
-    // Se asume que ANOTHER_SA_PATH está definido en el archivo principal del plugin
     if ($layout === 'slider') {
         include ANOTHER_SA_PATH . 'templates/slider-view.php';
     } else {
