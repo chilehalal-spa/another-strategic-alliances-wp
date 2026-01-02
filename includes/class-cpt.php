@@ -38,22 +38,43 @@ class Another_SA_CPT {
 
     public static function render_settings_box($post) {
         $layout = get_post_meta($post->ID, '_another_layout', true) ?: 'slider';
-        $color  = get_post_meta($post->ID, '_another_title_color', true) ?: '#1a428a';
+        $color  = get_post_meta($post->ID, '_another_title_color', true) ?: '#947e1e';
         $show_names = get_post_meta($post->ID, '_another_show_names', true); 
         
-        // --- NUEVO: Recuperar dimensiones ---
         $img_width  = get_post_meta($post->ID, '_another_img_width', true);
         $img_height = get_post_meta($post->ID, '_another_img_height', true);
+
+        $grid_cols = get_post_meta($post->ID, '_another_grid_cols', true);
+        if (!$grid_cols) $grid_cols = 4;
 
         wp_nonce_field('another_sa_save_action', 'another_sa_nonce');
         ?>
         <p>
             <label><strong>Tipo de Visualización:</strong></label><br>
-            <select name="another_layout" style="width:100%; margin-top:5px;">
+            <select name="another_layout" id="another_layout_select" style="width:100%; margin-top:5px;">
                 <option value="slider" <?php selected($layout, 'slider'); ?>>Carrusel (Slider)</option>
                 <option value="grid" <?php selected($layout, 'grid'); ?>>Cuadrícula (Grid)</option>
             </select>
         </p>
+
+        <div id="grid-settings" style="background:#f9f9f9; padding:10px; border:1px solid #ddd; margin-top:10px; <?php echo ($layout !== 'grid') ? 'display:none;' : ''; ?>">
+            <label><strong>Columnas por fila (Grid):</strong></label>
+            <input type="number" name="another_grid_cols" value="<?php echo esc_attr($grid_cols); ?>" min="1" max="12" style="width:100%; margin-top:5px;">
+            <small style="display:block; color:#666; margin-top:5px;">Define cuántos logos se verán por fila en escritorio.</small>
+        </div>
+
+        <script>
+            jQuery(document).ready(function($){
+                $('#another_layout_select').change(function(){
+                    if($(this).val() === 'grid') {
+                        $('#grid-settings').slideDown();
+                    } else {
+                        $('#grid-settings').slideUp();
+                    }
+                });
+            });
+        </script>
+
         <hr>
         <p>
             <label>
@@ -153,10 +174,15 @@ class Another_SA_CPT {
             update_post_meta($post_id, '_another_title_color', sanitize_hex_color($_POST['another_title_color']));
         }
 
+        if (isset($_POST['another_grid_cols'])) {
+            $cols = intval($_POST['another_grid_cols']);
+            if ($cols < 1) $cols = 1;
+            update_post_meta($post_id, '_another_grid_cols', $cols);
+        }
+
         $show_names = isset($_POST['another_show_names']) ? '1' : '';
         update_post_meta($post_id, '_another_show_names', $show_names);
 
-        // --- NUEVO: Guardar Dimensiones ---
         if (isset($_POST['another_img_width'])) {
             update_post_meta($post_id, '_another_img_width', sanitize_text_field($_POST['another_img_width']));
         }

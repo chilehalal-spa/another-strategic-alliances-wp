@@ -18,11 +18,14 @@ function another_sa_widget_render($atts) {
     $color  = get_post_meta($post_id, '_another_title_color', true) ?: '#947e1e';
     $show_names = get_post_meta($post_id, '_another_show_names', true);
     
-    // --- NUEVO: Recuperar dimensiones ---
+    // Recuperar configuración de columnas (Default 4)
+    $grid_cols = get_post_meta($post_id, '_another_grid_cols', true);
+    if (!$grid_cols) $grid_cols = 4;
+
+    // Dimensiones personalizadas
     $custom_w = get_post_meta($post_id, '_another_img_width', true);
     $custom_h = get_post_meta($post_id, '_another_img_height', true);
 
-    // Creamos una cadena de estilos inline si existen los valores
     $img_inline_style = '';
     if (!empty($custom_w)) {
         $img_inline_style .= 'max-width: ' . intval($custom_w) . 'px; ';
@@ -39,7 +42,6 @@ function another_sa_widget_render($atts) {
     $display_title = !empty($atts['title']) ? $atts['title'] : get_the_title($post_id);
     $extra_class = $show_names ? 'has-names' : '';
 
-    // --- CARGA CONDICIONAL DE CSS ---
     if ($layout === 'slider') {
         wp_enqueue_style('another-sa-slider');
     } else {
@@ -48,10 +50,10 @@ function another_sa_widget_render($atts) {
 
     ob_start();
     
-    // Incluimos la plantilla (que ahora recibirá $img_inline_style)
     if ($layout === 'slider') {
         include ANOTHER_SA_PATH . 'templates/slider-view.php';
     } else {
+        // La variable $grid_cols estará disponible dentro de grid-view.php
         include ANOTHER_SA_PATH . 'templates/grid-view.php';
     }
 

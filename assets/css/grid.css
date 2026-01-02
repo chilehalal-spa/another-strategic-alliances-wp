@@ -7,11 +7,12 @@
 }
 
 .another-grid-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    /* Usamos la variable definida en el PHP. Si falla, usa 4 por defecto */
+    grid-template-columns: repeat(var(--grid-cols, 4), 1fr);
     gap: 20px;
-    align-items: center;
+    align-items: start; /* Alineación vertical al inicio */
+    justify-content: center;
 }
 
 .another-grid-item {
@@ -20,8 +21,9 @@
     align-items: center;
     padding: 10px;
     transition: transform 0.3s ease;
-    width: 140px; 
-    flex: 0 0 auto; 
+    /* Quitamos el width fijo de 140px para que ocupe todo el ancho de su columna */
+    width: 100%; 
+    height: 100%;
 }
 
 .another-grid-item:hover {
@@ -30,7 +32,8 @@
 
 .another-grid-item img {
     max-width: 100%;
-    max-height: 50px; 
+    /* Si no se definió altura en admin, limitamos a 80px por estética */
+    max-height: 80px; 
     width: auto;
     transition: all 0.3s ease;
     object-fit: contain;
@@ -47,9 +50,15 @@
 /* Responsive */
 @media (max-width: 768px) {
     .another-grid-container {
+        /* En tablet forzamos 3 columnas, ignorando la configuración de escritorio si es muy alta */
+        grid-template-columns: repeat(3, 1fr);
         gap: 15px;
     }
-    .another-grid-item img {
-        max-height: 40px; 
+}
+
+@media (max-width: 480px) {
+    .another-grid-container {
+        /* En móvil forzamos 2 columnas para legibilidad */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
