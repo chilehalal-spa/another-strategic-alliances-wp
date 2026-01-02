@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Another Display Logos
  * Description: Crea widgets Grids y Sliders mediante Custom Post Types.
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Zumito
  */
 
@@ -13,6 +13,10 @@ define('ANOTHER_SA_URL', plugin_dir_url(__FILE__));
 
 // Cargamos el gestor de CPT y Shortcodes
 require_once ANOTHER_SA_PATH . 'includes/class-cpt.php';
+if (is_admin()) {
+    require_once ANOTHER_SA_PATH . 'includes/admin/class-admin-page.php';
+    Another_SA_Admin_Page::init();
+}
 require_once ANOTHER_SA_PATH . 'includes/shortcodes.php';
 
 // Frontend Assets
