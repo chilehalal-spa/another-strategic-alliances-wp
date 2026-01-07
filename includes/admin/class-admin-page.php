@@ -1,12 +1,19 @@
 <?php
 class Another_SA_Admin_Page {
 
+    /**
+     * Inicializa los hooks de administración.
+     */
     public static function init() {
         add_action('add_meta_boxes', [__CLASS__, 'register_meta_boxes']);
         add_action('save_post', [__CLASS__, 'save_meta_data']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'enqueue_assets']);
     }
 
+    /**
+     * Encola los scripts y estilos necesarios para el panel de administración.
+     * @param string $hook La página actual del admin.
+     */
     public static function enqueue_assets($hook) {
         global $post;
         if (($hook === 'post-new.php' || $hook === 'post.php')) {
@@ -34,8 +41,10 @@ class Another_SA_Admin_Page {
         }
     }
 
+    /**
+     * Registra las cajas (meta boxes) en la pantalla de edición.
+     */
     public static function register_meta_boxes() {
-        // 1. CAJA PRINCIPAL: Solo la Grid (ancho completo)
         add_meta_box(
             'another_sa_gallery_box', 
             'Galería de Logos', 
@@ -45,8 +54,6 @@ class Another_SA_Admin_Page {
             'high'
         );
 
-        // 2. CAJA LATERAL: El Inspector (Detalles del Item)
-        // La movemos a 'side' para que esté en la barra lateral por defecto
         add_meta_box(
             'another_sa_inspector_box', 
             'Detalles del Logo Seleccionado', 
@@ -56,7 +63,6 @@ class Another_SA_Admin_Page {
             'high'
         );
 
-        // 3. CAJA CONFIGURACIÓN (Settings)
         add_meta_box(
             'another_sa_settings_box', 
             'Configuración General', 
@@ -67,7 +73,9 @@ class Another_SA_Admin_Page {
         );
     }
 
-    // Renderiza SOLO la Grid
+    /**
+     * Renderiza la Grid principal.
+     */
     public static function render_gallery_box($post) {
         $json_value = get_post_meta($post->ID, '_another_items', true);
         if (empty($json_value)) $json_value = '[]';
@@ -91,7 +99,9 @@ class Another_SA_Admin_Page {
         <?php
     }
 
-    // Renderiza SOLO el Inspector (ahora en su propia caja)
+    /**
+     * Renderiza el Inspector lateral.
+     */
     public static function render_inspector_box($post) {
         ?>
         <div id="another-gallery-inspector" class="another-inspector-standalone">
@@ -101,11 +111,18 @@ class Another_SA_Admin_Page {
         <?php
     }
 
+    /**
+     * Renderiza la configuración general (Layout, Colores, Dimensiones).
+     */
     public static function render_settings_box($post) {
         $layout = get_post_meta($post->ID, '_another_layout', true) ?: 'slider';
         $grid_cols = get_post_meta($post->ID, '_another_grid_cols', true) ?: 4;
         $color  = get_post_meta($post->ID, '_another_title_color', true) ?: '#947e1e';
         $show_names = get_post_meta($post->ID, '_another_show_names', true);
+
+        // Nuevos campos de dimensiones
+        $img_width = get_post_meta($post->ID, '_another_img_width', true);
+        $img_height = get_post_meta($post->ID, '_another_img_height', true);
         ?>
         <p><strong>Layout:</strong></p>
         <select name="another_layout" style="width:100%; margin-bottom:10px;">
@@ -114,7 +131,17 @@ class Another_SA_Admin_Page {
         </select>
 
         <label>Columnas (Solo Grid):</label>
-        <input type="number" name="another_grid_cols" value="<?php echo esc_attr($grid_cols); ?>" min="1" max="6" style="width:60px;">
+        <input type="number" name="another_grid_cols" value="<?php echo esc_attr($grid_cols); ?>" min="1" max="12" style="width:60px;">
+
+        <hr>
+        <p><strong>Dimensiones Máximas (Armonía):</strong></p>
+        <p class="description" style="font-size:11px; margin-bottom:5px;">Deja vacío para usar defecto. Acepta px, %, rem.</p>
+        
+        <label style="display:block; margin-bottom:3px;">Ancho Máx (Max-Width):</label>
+        <input type="text" name="another_img_width" value="<?php echo esc_attr($img_width); ?>" placeholder="ej. 150px o 100%" style="width:100%; margin-bottom:8px;">
+
+        <label style="display:block; margin-bottom:3px;">Alto Máx (Max-Height):</label>
+        <input type="text" name="another_img_height" value="<?php echo esc_attr($img_height); ?>" placeholder="ej. 80px" style="width:100%;">
 
         <hr>
         <label>
@@ -132,6 +159,9 @@ class Another_SA_Admin_Page {
         <?php
     }
 
+    /**
+     * Guarda los metadatos del post.
+     */
     public static function save_meta_data($post_id) {
         if (!isset($_POST['another_sa_nonce']) || !wp_verify_nonce($_POST['another_sa_nonce'], 'another_sa_save_action')) return;
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
@@ -142,6 +172,10 @@ class Another_SA_Admin_Page {
         if (isset($_POST['another_grid_cols'])) update_post_meta($post_id, '_another_grid_cols', intval($_POST['another_grid_cols']));
         if (isset($_POST['another_title_color'])) update_post_meta($post_id, '_another_title_color', sanitize_hex_color($_POST['another_title_color']));
         
+        // Guardar dimensiones permitiendo texto (px, %, etc)
+        if (isset($_POST['another_img_width'])) update_post_meta($post_id, '_another_img_width', sanitize_text_field($_POST['another_img_width']));
+        if (isset($_POST['another_img_height'])) update_post_meta($post_id, '_another_img_height', sanitize_text_field($_POST['another_img_height']));
+
         $show_names = isset($_POST['another_show_names']) ? '1' : '';
         update_post_meta($post_id, '_another_show_names', $show_names);
     }

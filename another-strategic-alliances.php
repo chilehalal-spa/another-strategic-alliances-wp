@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Another Display Logos
  * Description: Crea widgets Grids y Sliders mediante Custom Post Types.
- * Version: 1.4.2
+ * Version: 1.4.5
  * Author: Zumito
  */
 
