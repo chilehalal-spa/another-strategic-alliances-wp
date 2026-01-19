@@ -7,15 +7,15 @@
  * @var array  $items
  * @var string $extra_class
  * @var bool   $show_names
- * @var string $img_inline_style (NUEVO)
+ * @var string $img_inline_style
  */
 ?>
 <section class="another-slider-section">
     <div class="another-container">
         <?php if ($display_title): ?>
-            <h3 class="another-section-title" style="color: <?php echo esc_attr($color); ?>;">
+            <h2 class="wp-block-heading" style="color: <?php echo esc_attr($color); ?>;">
                 <?php echo esc_html($display_title); ?>
-            </h3>
+            </h2>
         <?php endif; ?>
         
         <div class="swiper another-slider-container">

@@ -8,15 +8,15 @@
  * @var string $extra_class
  * @var bool   $show_names
  * @var string $img_inline_style
- * @var int    $grid_cols (NUEVO)
+ * @var int    $grid_cols
  */
 ?>
 <section class="another-grid-section">
     <div class="another-container">
         <?php if ($display_title): ?>
-            <h3 class="another-section-title" style="color: <?php echo esc_attr($color); ?>;">
+            <h2 class="wp-block-heading" style="color: <?php echo esc_attr($color); ?>;">
                 <?php echo esc_html($display_title); ?>
-            </h3>
+            </h2>
         <?php endif; ?>
         
         <div class="another-grid-container" style="--grid-cols: <?php echo intval($grid_cols); ?>;">
