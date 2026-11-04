@@ -2,11 +2,19 @@
 /**
  * Plugin Name: Another Display Logos
  * Description: Crea widgets Grids y Sliders mediante Custom Post Types.
- * Version: 1.4.5
+ * Version: 1.5.0
  * Author: Zumito
+ * Requires at least: 5.8
+ * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Update URI: https://github.com/chilehalal-spa/another-strategic-alliances-wp
  */
 
 if (!defined('ABSPATH')) exit; 
+
+// Actualizaciones desde las releases de GitHub
+require_once __DIR__ . '/includes/class-chilehalal-github-updater.php';
+Chilehalal_GitHub_Updater_V1::register( __FILE__, 'chilehalal-spa/another-strategic-alliances-wp' );
 
 define('ANOTHER_SA_PATH', plugin_dir_path(__FILE__));
 define('ANOTHER_SA_URL', plugin_dir_url(__FILE__));
