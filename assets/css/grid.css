@@ -50,15 +50,42 @@
 /* Responsive */
 @media (max-width: 768px) {
     .another-grid-container {
-        /* En tablet forzamos 3 columnas, ignorando la configuración de escritorio si es muy alta */
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
+        /* En tablet y teléfono, 3 columnas (o menos si se configuraron menos) */
+        grid-template-columns: repeat(min(var(--grid-cols, 4), 3), 1fr);
+        gap: 10px;
     }
-}
 
-@media (max-width: 480px) {
-    .another-grid-container {
-        /* En móvil forzamos 2 columnas para legibilidad */
-        grid-template-columns: repeat(2, 1fr);
+    .another-grid-item {
+        padding: 6px;
+    }
+
+    .another-grid-item img {
+        max-height: 64px;
+    }
+
+    /* Franja deslizable: dos filas que avanzan de lado; la columna cortada a la derecha indica que hay más */
+    .another-grid-container.another-grid-scroll {
+        grid-template-columns: none;
+        grid-template-rows: repeat(2, auto);
+        grid-auto-flow: column;
+        grid-auto-columns: calc((100% - 20px) / 3.4);
+        justify-content: start; /* centrado, la mitad izquierda quedaría fuera de alcance del scroll */
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+    }
+
+    .another-grid-container.another-grid-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .another-grid-scroll > .another-grid-item {
+        scroll-snap-align: start;
+    }
+
+    .another-grid-scroll > .another-grid-item:hover {
+        transform: none;
     }
 }

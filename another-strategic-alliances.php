@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Another Display Logos
  * Description: Crea widgets Grids y Sliders mediante Custom Post Types.
- * Version: 1.5.0
+ * Version: 1.6.0
  * Author: Zumito
  * Requires at least: 5.8
  * License: GPL-2.0-or-later
@@ -30,7 +30,7 @@ require_once ANOTHER_SA_PATH . 'includes/shortcodes.php';
 // Frontend Assets
 function another_sa_enqueue_scripts() {
     // 1. Estilos Comunes (Base) - Se cargan siempre o se pueden condicionar también
-    wp_enqueue_style('another-sa-common', ANOTHER_SA_URL . 'assets/css/style.css', [], '2.1.0');
+    wp_enqueue_style('another-sa-common', ANOTHER_SA_URL . 'assets/css/style.css', [], '1.6.0');
 
     // 2. Swiper (Librería externa) - Se mantiene igual
     wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11.0.0');
@@ -38,7 +38,7 @@ function another_sa_enqueue_scripts() {
 
     // 3. Estilos Específicos (Solo REGISTRO, se encolan en el shortcode)
     wp_register_style('another-sa-slider', ANOTHER_SA_URL . 'assets/css/slider.css', ['another-sa-common', 'swiper-css'], '2.1.0');
-    wp_register_style('another-sa-grid', ANOTHER_SA_URL . 'assets/css/grid.css', ['another-sa-common'], '2.1.0');
+    wp_register_style('another-sa-grid', ANOTHER_SA_URL . 'assets/css/grid.css', ['another-sa-common'], '1.6.0');
 
     // 4. JS Frontend
     wp_enqueue_script('another-sa-frontend', ANOTHER_SA_URL . 'assets/js/frontend.js', ['swiper-js'], '2.0.0', true);

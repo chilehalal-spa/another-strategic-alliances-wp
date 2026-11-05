@@ -119,6 +119,7 @@ class Another_SA_Admin_Page {
         $grid_cols = get_post_meta($post->ID, '_another_grid_cols', true) ?: 4;
         $color  = get_post_meta($post->ID, '_another_title_color', true) ?: '#947e1e';
         $show_names = get_post_meta($post->ID, '_another_show_names', true);
+        $mobile_scroll = get_post_meta($post->ID, '_another_mobile_scroll', true);
 
         // Nuevos campos de dimensiones
         $img_width = get_post_meta($post->ID, '_another_img_width', true);
@@ -132,6 +133,12 @@ class Another_SA_Admin_Page {
 
         <label>Columnas (Solo Grid):</label>
         <input type="number" name="another_grid_cols" value="<?php echo esc_attr($grid_cols); ?>" min="1" max="12" style="width:60px;">
+
+        <label style="display:block; margin-top:8px;">
+            <input type="checkbox" name="another_mobile_scroll" value="1" <?php checked($mobile_scroll, '1'); ?>>
+            En teléfono: franja deslizable (Solo Grid)
+        </label>
+        <p class="description" style="font-size:11px;">Para listas largas: dos filas que se deslizan de lado en vez de una columna muy alta.</p>
 
         <hr>
         <p><strong>Dimensiones Máximas (Armonía):</strong></p>
@@ -178,5 +185,8 @@ class Another_SA_Admin_Page {
 
         $show_names = isset($_POST['another_show_names']) ? '1' : '';
         update_post_meta($post_id, '_another_show_names', $show_names);
+
+        $mobile_scroll = isset($_POST['another_mobile_scroll']) ? '1' : '';
+        update_post_meta($post_id, '_another_mobile_scroll', $mobile_scroll);
     }
 }

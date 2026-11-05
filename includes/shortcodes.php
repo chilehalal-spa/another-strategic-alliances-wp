@@ -21,6 +21,7 @@ function another_sa_widget_render($atts) {
     // Recuperar configuración de columnas (Default 4)
     $grid_cols = get_post_meta($post_id, '_another_grid_cols', true);
     if (!$grid_cols) $grid_cols = 4;
+    $grid_class = get_post_meta($post_id, '_another_mobile_scroll', true) ? 'another-grid-scroll' : '';
 
     // Dimensiones personalizadas (Ahora aceptan strings como '50%' o '100px')
     $custom_w = get_post_meta($post_id, '_another_img_width', true);

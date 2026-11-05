@@ -9,6 +9,7 @@
  * @var bool   $show_names
  * @var string $img_inline_style
  * @var int    $grid_cols
+ * @var string $grid_class
  */
 ?>
 <section class="another-grid-section">
@@ -19,7 +20,7 @@
             </h2>
         <?php endif; ?>
         
-        <div class="another-grid-container" style="--grid-cols: <?php echo intval($grid_cols); ?>;">
+        <div class="another-grid-container <?php echo esc_attr($grid_class); ?>" style="--grid-cols: <?php echo intval($grid_cols); ?>;">
             <?php foreach ($items as $item): 
                 $name = esc_attr($item['title'] ?? '');
                 $logo = esc_url($item['icon'] ?? '');
